@@ -1,21 +1,19 @@
 version: '3.5'
 
 services:
-  postgres:
-    container_name: postgres_container
-    image: postgres
+  mysql:
+    container_name: mysql_container
+    image: mysql:learn-sql
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      PGDATA: /data/postgres
-    volumes:
-       - postgres:/data/postgres
+      MYSQL_DATABASE: 'mysql'
+      MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - "5432:5432"
+      - "3306:3306"
     networks:
-      - postgres
-    restart: unless-stopped
-  
+      - mysql
+    volumes:
+      - mysql:/var/lib/mysql
+    
   # pgadmin:
   #   container_name: pgadmin_container
   #   image: dpage/pgadmin4
@@ -33,10 +31,8 @@ services:
   #   restart: unless-stopped
 
 networks:
-  postgres:
+  mysql:
     driver: bridge
 
 volumes:
-    postgres:
-    # pgadmin:
-
+    mysql:
